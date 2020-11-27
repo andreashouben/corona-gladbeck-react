@@ -51,20 +51,22 @@ function App() {
         <main>
             <h1>Covid Fälle in Gladbeck</h1>
 
-            <table>
-                <thead>
-                <tr>
-                    <th>Datum</th>
-                    <th>Gemeldet</th>
-                    <th>Genesen</th>
-                    <th>Verstorben</th>
-                    <th>Aktuell infiziert</th>
-                </tr>
-                </thead>
-                <tbody>
-                {rows}
-                </tbody>
-            </table>
+            {data.length > 0 ?
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Gemeldet</th>
+                        <th>Genesen</th>
+                        <th>Verstorben</th>
+                        <th>Aktuell infiziert</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {rows}
+                    </tbody>
+                </table>
+             : 'Lade Daten...'}
 
         </main>
     );
