@@ -1,4 +1,4 @@
-![Covid Icon](public/favicon.svg | width=100)
+<img src="public/favicon.svg" alt="Corona icon" width="100px"/>
 
 # Corona Gladbeck
 
