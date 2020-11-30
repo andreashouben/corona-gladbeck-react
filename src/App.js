@@ -50,6 +50,7 @@ function App() {
     return (
         <main>
             <h1>Covid Fälle in Gladbeck</h1>
+            <h2>Quelle: <a href="https://www.kreis-re.de/dok/geoatlas/FME/CoStat/Diaggeskra-Gladbeck.html">Kreis Recklinghausen</a></h2>
 
             {data.length > 0 ?
                 <table>
