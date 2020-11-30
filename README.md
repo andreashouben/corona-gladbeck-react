@@ -1,4 +1,4 @@
-![Covid Icon](public/favicon.svg)
+![Covid Icon](public/favicon.svg | width=100)
 
 # Corona Gladbeck
 
