@@ -7,11 +7,12 @@
     "node-html-parser": "^2.0.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-icons": "^4.1.0",
     "react-scripts": "2.1.1",
     "require-from-string": "^2.0.2"
   },
   "scripts": {
-    "dev": "BROWSER=none react-scripts start",
+    "dev": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -21,5 +22,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "prettier": "^2.2.1"
+  }
 }

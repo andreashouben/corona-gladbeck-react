@@ -18,6 +18,12 @@ h2 {
 p {
   font-size: 16px;
 }
+.up{
+    color: red;
+}
+.down{
+    color: green;
+}
 a {
   border-bottom: 1px solid white;
   color: #0076ff;
@@ -38,4 +44,18 @@ pre {
 code:before,
 code:after {
   content: '\`';
+}
+
+
+table{
+    border-spacing: 0;
+}
+
+td,th  {
+    border-width: 0 1px 0  0;
+    border-color: lightgray;
+    border-style: solid;
+}
+td:last-child,th:last-child{
+    border: none;
 }
