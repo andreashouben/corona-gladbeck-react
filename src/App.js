@@ -1,76 +1,99 @@
-import React from 'react';
-import {useEffect, useState} from 'react';
-import './App.css';
+import React from "react";
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        async function getDate() {
-            const res = await fetch('/api/data');
-            const newData = await res.json()
-            setData(newData);
-        }
-
-        getDate();
-    }, []);
-
-    const diff = (field, curRow, nextRow) => {
-        if (!nextRow) {
-            return 0
-        }
-        const diff =  curRow[field] - nextRow[field]
-        return diff > 0 ? `+${diff}` : diff
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function getDate() {
+      const res = await fetch("/api/data");
+      const newData = await res.json();
+      setData(newData);
     }
 
-    const rows = data
-        .map(row => ({...row, date: new Date(row.date)}))
-        .map((row, index) => {
-                return (
-                    <tr
-                        style={{backgroundColor: row.date.getDay() === 1 ? 'aliceblue' : 'none'}}
-                        key={row.date}>
-                        <td>{row.date.toLocaleDateString(
-                            'de-DE',
-                            {
-                                weekday: 'short',
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric'
-                            }
-                        )}</td>
-                        <td>{row.confirmedCases} ({diff('confirmedCases', row, data[index + 1])})</td>
-                        <td>{row.recovered} ({diff('recovered', row, data[index + 1])})</td>
-                        <td>{row.deaths} ({diff('deaths', row, data[index + 1])})</td>
-                        <td>{row.currentlyInfected} ({diff('currentlyInfected', row, data[index + 1])})</td>
-                    </tr>
-                )
-            }
-        )
+    getDate();
+  }, []);
 
-    return (
-        <main>
-            <h1>Covid Fälle in Gladbeck</h1>
-            <h2>Quelle: <a href="https://www.kreis-re.de/dok/geoatlas/FME/CoStat/Diaggeskra-Gladbeck.html">Kreis Recklinghausen</a></h2>
+  const diff = (field, curRow, nextRow) => {
+    if (!nextRow) {
+      return 0;
+    }
+    const diff = curRow[field] - nextRow[field];
+    return diff > 0 ? `+${diff}` : diff;
+  };
 
-            {data.length > 0 ?
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Datum</th>
-                        <th>Gemeldet</th>
-                        <th>Genesen</th>
-                        <th>Verstorben</th>
-                        <th>Aktuell infiziert</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {rows}
-                    </tbody>
-                </table>
-             : 'Lade Daten...'}
+  const incidence = (id, data) => {
+    const last7Days = [...data].splice(id, 7).reduce((a, b) => a + b);
 
-        </main>
-    );
+    return (last7Days / 75000) * 10000;
+  };
+
+  const rows = data
+    .map((row) => ({ ...row, date: new Date(row.date) }))
+    .map((row, index) => {
+      return (
+        <tr
+          style={{
+            backgroundColor: row.date.getDay() === 1 ? "aliceblue" : "none",
+          }}
+          key={row.date}
+        >
+          <td>
+            {row.date.toLocaleDateString("de-DE", {
+              weekday: "short",
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+            })}
+          </td>
+          <td>
+            {row.confirmedCases} ({diff("confirmedCases", row, data[index + 1])}
+            )
+          </td>
+          <td>{incidence(index, data)} </td>
+          <td>
+            {row.recovered} ({diff("recovered", row, data[index + 1])})
+          </td>
+          <td>
+            {row.deaths} ({diff("deaths", row, data[index + 1])})
+          </td>
+          <td>
+            {row.currentlyInfected} (
+            {diff("currentlyInfected", row, data[index + 1])})
+          </td>
+        </tr>
+      );
+    });
+
+  return (
+    <main>
+      <h1>Covid Fälle in Gladbeck</h1>
+      <h2>
+        Quelle:{" "}
+        <a href="https://www.kreis-re.de/dok/geoatlas/FME/CoStat/Diaggeskra-Gladbeck.html">
+          Kreis Recklinghausen
+        </a>
+      </h2>
+
+      {data.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Inzidenz</th>
+              <th>Gemeldet</th>
+              <th>Genesen</th>
+              <th>Verstorben</th>
+              <th>Aktuell infiziert</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      ) : (
+        "Lade Daten..."
+      )}
+    </main>
+  );
 }
 
 export default App;
