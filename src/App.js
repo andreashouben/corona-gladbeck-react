@@ -39,9 +39,9 @@ function App() {
     ) : cur - prev === 0 ? (
       ''
     ) : cur - prev > 0 ? (
-      <HiTrendingUp color={'red'} title="hoch" />
+      <HiTrendingUp color={'red'} title="steigt" />
     ) : (
-      <HiTrendingDown color={'green'} title="runter" />
+      <HiTrendingDown color={'green'} title="sinkt" />
     )
 
   const rows = data
