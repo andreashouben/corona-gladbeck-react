@@ -2,12 +2,16 @@ import React, {useEffect, useState} from 'react'
 import './App.css'
 import {HiTrendingDown, HiTrendingUp} from 'react-icons/all'
 
+const DAYS_TO_SHOW_VALUES = 42
+
 function App() {
   const [data, setData] = useState([])
+  const [limit, setLimit] = useState(DAYS_TO_SHOW_VALUES)
   useEffect(() => {
     async function getDate() {
       const res = await fetch('/api/data')
       const newData = await res.json()
+
       setData(newData)
     }
 
@@ -83,6 +87,11 @@ function App() {
         </tr>
       )
     })
+    .splice(0, limit)
+
+  const raiseLimit = () => {
+    setLimit(limit + DAYS_TO_SHOW_VALUES)
+  }
 
   return (
     <main>
@@ -95,19 +104,26 @@ function App() {
       </h2>
 
       {data.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Datum</th>
-              <th>Inzidenz</th>
-              <th>Gemeldet</th>
-              <th>Genesen</th>
-              <th>Verstorben</th>
-              <th>Aktuell infiziert</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </table>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Inzidenz</th>
+                <th>Gemeldet</th>
+                <th>Genesen</th>
+                <th>Verstorben</th>
+                <th>Aktuell infiziert</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+          {limit < data.length ? (
+            <button onClick={() => raiseLimit()}>Mehr...</button>
+          ) : (
+            ''
+          )}
+        </div>
       ) : (
         'Lade Daten...'
       )}
