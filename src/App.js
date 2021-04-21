@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import './App.css'
-import {HiTrendingDown, HiTrendingUp} from 'react-icons/all'
+import {HiTrendingDown, HiTrendingUp, HiStop} from 'react-icons/all'
 
 const DAYS_TO_SHOW_VALUES = 42
 
@@ -41,7 +41,7 @@ function App() {
     !cur || !prev ? (
       ''
     ) : cur - prev === 0 ? (
-      ''
+      <HiStop color={'gray'} title="bleibt gleich" />
     ) : cur - prev > 0 ? (
       <HiTrendingUp color={'red'} title="steigt" />
     ) : (
