@@ -41,7 +41,7 @@ function App() {
     !cur || !prev ? (
       ''
     ) : cur - prev === 0 ? (
-      <HiStop title="bleibt gleich" />
+      <HiStop color={'gray'} title="bleibt gleich" />
     ) : cur - prev > 0 ? (
       <HiTrendingUp color={'red'} title="steigt" />
     ) : (
